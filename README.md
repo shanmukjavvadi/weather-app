@@ -4,7 +4,7 @@ A real-time weather forecast web application that displays current conditions, h
 
 ## 🚀 Live Demo
 
-[View Live →](https://weather-app-shanmuk.vercel.app)
+[View Live →](https://weather-app-blush-sigma-71.vercel.app/)
 
 ## 📸 Preview
 
