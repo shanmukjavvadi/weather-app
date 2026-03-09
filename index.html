@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="WeatherNow - Real-time weather forecasts for any city worldwide"/>
+  <title>WeatherNow — Live Weather Forecast</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <div id="cur"></div>
+  <div id="cur2"></div>
+  <canvas id="bgCanvas"></canvas>
+
+  <div class="container">
+    <header>
+      <div class="logo-row">
+        <span class="logo-icon">🌤</span>
+        <span class="logo-text">WeatherNow</span>
+      </div>
+      <p class="logo-sub">Real-time global weather intelligence</p>
+      <div class="status-pill">
+        <span class="status-dot"></span>
+        Live Data · OpenWeatherMap API
+      </div>
+    </header>
+
+    <div class="search-wrap">
+      <div class="search-glow"></div>
+      <div class="search-inner">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="city" placeholder="Search any city worldwide..." autocomplete="off"/>
+        <button class="search-btn" id="searchBtn">Search</button>
+      </div>
+    </div>
+
+    <div class="quick-cities">
+      <span class="quick-label">Quick →</span>
+      <button class="q-btn" data-city="Hyderabad">🇮🇳 Hyderabad</button>
+      <button class="q-btn" data-city="Mumbai">🇮🇳 Mumbai</button>
+      <button class="q-btn" data-city="Delhi">🇮🇳 Delhi</button>
+      <button class="q-btn" data-city="London">🇬🇧 London</button>
+      <button class="q-btn" data-city="New York">🇺🇸 New York</button>
+      <button class="q-btn" data-city="Tokyo">🇯🇵 Tokyo</button>
+      <button class="q-btn" data-city="Dubai">🇦🇪 Dubai</button>
+    </div>
+
+    <div class="error-box" id="errBox"></div>
+
+    <div class="loading" id="loading">
+      <div class="sk-ring"></div>
+      <p class="sk-txt">Fetching weather data...</p>
+    </div>
+
+    <div class="result" id="result">
+      <div class="unit-toggle">
+        <span class="unit-label">°C</span>
+        <label class="toggle-sw">
+          <input type="checkbox" id="unitToggle"/>
+          <span class="toggle-track"></span>
+        </label>
+        <span class="unit-label">°F</span>
+      </div>
+
+      <div class="hero-card" id="heroCard">
+        <div class="hero-top">
+          <div>
+            <div class="city-name" id="cityName"></div>
+            <div class="city-meta" id="cityMeta"></div>
+          </div>
+          <div class="time-block">
+            <div class="live-time" id="liveTime"></div>
+            <div class="live-date" id="liveDate"></div>
+          </div>
+        </div>
+        <div class="temp-block">
+          <div class="temp-big" id="tempBig"></div>
+          <div class="temp-right">
+            <span class="weather-emoji" id="wEmoji"></span>
+            <div class="weather-label" id="wLabel"></div>
+            <div class="feels" id="wFeels"></div>
+            <div class="hi-lo" id="wHiLo"></div>
+          </div>
+        </div>
+        <div class="stats-bar">
+          <div class="stat-item"><span class="s-icon">💧</span><span class="s-val" id="s-hum"></span><span class="s-key">Humidity</span></div>
+          <div class="stat-item"><span class="s-icon">🌬</span><span class="s-val" id="s-wind"></span><span class="s-key">Wind</span></div>
+          <div class="stat-item"><span class="s-icon">👁</span><span class="s-val" id="s-vis"></span><span class="s-key">Visibility</span></div>
+          <div class="stat-item"><span class="s-icon">📊</span><span class="s-val" id="s-pres"></span><span class="s-key">Pressure</span></div>
+          <div class="stat-item"><span class="s-icon">☁</span><span class="s-val" id="s-cloud"></span><span class="s-key">Cloud</span></div>
+        </div>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="ic-label">🌅 Sun Schedule</div>
+          <div id="sunTimes"></div>
+          <div class="sun-arc"><svg id="arcSvg" viewBox="0 0 200 60" preserveAspectRatio="none"></svg></div>
+        </div>
+        <div class="info-card">
+          <div class="ic-label">🌿 Air Quality</div>
+          <div class="ic-val" id="aqiVal"></div>
+          <div class="prog-bg"><div class="prog-fill" id="aqiFill"></div></div>
+          <div class="ic-sub" id="aqiSub"></div>
+        </div>
+        <div class="info-card">
+          <div class="ic-label">☀️ UV Index</div>
+          <div class="ic-val" id="uvVal"></div>
+          <div class="prog-bg"><div class="prog-fill" id="uvFill"></div></div>
+          <div class="ic-sub" id="uvSub"></div>
+        </div>
+      </div>
+
+      <div class="forecast-card">
+        <div class="fc-header"><div class="fc-title">// 24-Hour Forecast</div><div class="fc-line"></div></div>
+        <div class="hourly-row" id="hourlyRow"></div>
+      </div>
+
+      <div class="forecast-card">
+        <div class="fc-header"><div class="fc-title">// 5-Day Forecast</div><div class="fc-line"></div></div>
+        <div class="forecast-row" id="foreRow"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/weather.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
